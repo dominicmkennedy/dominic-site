@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Album {
+  mbid         String   @id // @db.VarChar(36)
+  name         String   // @db.VarChar(255)
+  credits      String   // @db.VarChar(1023)
+  duration     Int
+  numberTracks Int
+  releaseDate  DateTime // @db.Date
+  coverUrl     String
+  dominicScore Int?
+  currentElo   Int?
+  reviewText   String?  // @db.VarChar(Max)
+  tracks       Track[]
+  betterThan   Album[] @relation("elo")
+  worseThan    Album[] @relation("elo")
+}
+
+model Track {
+  mbid          String @id // @db.VarChar(36)
+  album         Album  @relation(fields: [albumId], references: [mbid])
+  albumId       String // @db.VarChar(36)
+  name          String // @db.VarChar(255)
+  credits       String // @db.VarChar(1023)
+  duration      Int
+  trackNumber   Int
+  relAlbumScore Int?
+}
