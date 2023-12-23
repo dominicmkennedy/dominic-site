@@ -14,5 +14,5 @@ export const load: PageServerLoad = async () => {
   // const b = await Promise.all(tracks.map(data => prisma.track.create({ data })))
 
   // return { a, b }
-  return { albums: prisma.album.findMany({ include: { tracks: true } }) }
+  return { albums: prisma.album.findMany({ include: { tracks: {orderBy: {trackNumber: "asc"}} } }) }
 };
