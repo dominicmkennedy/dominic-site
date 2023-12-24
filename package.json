@@ -43,6 +43,7 @@
     "@floating-ui/dom": "1.5.3",
     "@prisma/client": "5.7.1",
     "highlight.js": "11.9.0",
-    "musicbrainz-api": "^0.14.0"
+    "musicbrainz-api": "^0.14.0",
+    "svelte-markdown": "^0.4.0"
   }
 }
