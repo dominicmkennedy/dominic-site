@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const mdText = `
 # Basics of Markdown
-Markdown is the most popular markup language that can be used to format documents. It can be used to create *websites*,*ebooks*,*email*,*chats in discussions forums*.
+\`Markdown\` is the most popular markup language that can be used to format documents. It can be used to create *websites*,*ebooks*,*email*,*chats in discussions forums*.
 
 ## Topics
 1. Paragraphs
@@ -89,7 +89,7 @@ Cool Tips
  * [Grammarly](https://marketplace.visualstudio.com/items?itemName=znck.grammarly) extension can eliminate typo and grammar mistakes
  * [ScreenTOGif](https://www.screentogif.com/) to record videos in GIF format
  * Upload GIF's to [giphy](https://giphy.com/) to embed them into blog posts.
- * [Stackedit](https://stackedit.io/) for Markdown Editing in Browser.
+ * [Stackedit](https://stackedit.io/) for \`Markdown\` Editing in Browser.
 `
 
 export const load: PageServerLoad = async ({ params }) => {

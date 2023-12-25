@@ -3,8 +3,8 @@
 	export let title: string | undefined = undefined;
 </script>
 
-<a {href} {title} class="text-blue-400 underline">
-	<span class="font-medium">
+<a {href} {title} class="anchor">
+	<span class="font-medium text-pink-400 underline decoration-pink-400">
 		<slot />
 	</span>
 </a>
