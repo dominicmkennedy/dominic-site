@@ -1,11 +1,7 @@
 <script lang="ts">
-	import SvelteMarkdown from 'svelte-markdown';
-	import Link from '$lib/renderers/Link.svelte';
-	import List from '$lib/renderers/List.svelte';
-	import Code from '$lib/renderers/Code.svelte';
-	import CodeSpan from '$lib/renderers/CodeSpan.svelte';
+	import Md from '$lib/renderers/Md.svelte';
 
-	const text = `
+	const source = `
 # Hello!
 My name is Dominic Kennedy, and this is my website.
 This site is where I plan to be most active, so if you'd like to keep up with the goings on in my life, this is the place to be.
@@ -15,12 +11,4 @@ The source code for this website is hosted [here](https://github.com/dominicmken
   `;
 </script>
 
-<article
-	class="p-4 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
->
-	<div class="not-prose"></div>
-	<SvelteMarkdown
-		source={text}
-		renderers={{ link: Link, code: Code, codespan: CodeSpan, list: List }}
-	/>
-</article>
+<Md {source}></Md>
