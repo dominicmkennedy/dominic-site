@@ -43,5 +43,3 @@ export const getAlbumData = async (mbid: string) => {
 
   return { album, tracks };
 };
-
-

@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { PrismaClient } from '@prisma/client'
+import { getAlbum } from '$lib/server/db/services';
 
 const mdText = `
 # Yesterday's Tomorrow: Phony Ppl
@@ -45,12 +45,5 @@ Overall I give this album a 2 out of 5 stars.
 `
 
 export const load: PageServerLoad = async ({ params }) => {
-  const prisma = new PrismaClient()
-
-  const album = prisma.album.findUniqueOrThrow({
-    where: { mbid: params.slug },
-    include: { tracks: { orderBy: { trackNumber: "asc" } } }
-  })
-
-  return { album, mdText }
+  return { album: getAlbum(params.slug), mdText }
 };

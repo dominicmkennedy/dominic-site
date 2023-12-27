@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import Md from '$lib/renderers/Md.svelte';
-	import AlbumCard from '../AlbumCard.svelte';
+	import AlbumCard from '$lib/AlbumCard.svelte';
 
 	export let data: PageData;
 	const source = `
