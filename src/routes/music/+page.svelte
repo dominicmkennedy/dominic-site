@@ -37,7 +37,7 @@ In no particular order these are some things that would be nice to achive.
 	{#await data.albums then albums}
 		{#each albums as albumData}
 			<div class="max-w-xl mx-auto">
-				<AlbumCard {albumData} />
+				<AlbumCard inList={true} {albumData} />
 			</div>
 		{/each}
 	{/await}

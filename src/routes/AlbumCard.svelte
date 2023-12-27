@@ -1,11 +1,20 @@
 <script lang="ts">
 	import { Ratings } from '@skeletonlabs/skeleton';
 	import type { Album, Track } from '@prisma/client';
+	import { goto } from '$app/navigation';
 	export let albumData: Album & { tracks: Track[] };
+	export let inList: boolean;
 	const reviewDate = new Date();
 </script>
 
-<a href={`/music/${albumData.mbid}`} class="card card-hover variant-ghost rounded-lg block p-4">
+<button
+	on:click={() => {
+		goto(`/music/${albumData.mbid}`);
+	}}
+	class="card variant-ghost rounded-lg block p-4"
+	class:card-hover={inList}
+	disabled={!inList}
+>
 	<div class="grid grid-cols-5 gap-4">
 		<div class="col-span-3 space-y-2 flex flex-col">
 			<div class="flex-1">
@@ -88,4 +97,23 @@
 			<img src={albumData.coverUrl} alt="" class="rounded-lg max-h-52" />
 		</div>
 	</div>
-</a>
+
+	<div class="table-container pt-2 rounded-xl" class:hidden={inList}>
+		<table class="table table-compact rounded-xl">
+			<tbody>
+				{#each albumData.tracks as track}
+					<tr>
+						<td>{track.name}</td>
+						<td>
+							{new Date(track.duration).getMinutes()} min
+							{new Date(track.duration).getSeconds()} sec
+						</td>
+						{#if track.relAlbumScore}
+							<td>{track.relAlbumScore}</td>
+						{/if}
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+</button>
