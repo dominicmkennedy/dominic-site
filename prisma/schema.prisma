@@ -9,19 +9,21 @@ datasource db {
 
 
 model Album {
-  mbid         String   @id // @db.VarChar(36)
-  name         String   // @db.VarChar(255)
-  credits      String   // @db.VarChar(1023)
+  mbid         String    @id // @db.VarChar(36)
+  name         String    // @db.VarChar(255)
+  credits      String    // @db.VarChar(1023)
   duration     Int
-  numberTracks Int
-  releaseDate  DateTime // @db.Date
-  coverUrl     String
+  releaseDate  DateTime  // @db.Date
+  trackLenMean Float
+  trackLenStd  Float
+  coverArtUrl  String
+  reviewTextMd String?
   dominicScore Int?
   currentElo   Int?
-  reviewText   String?  // @db.VarChar(Max)
+  reviewDate   DateTime? // @db.Date
   tracks       Track[]
-  betterThan   Album[] @relation("elo")
-  worseThan    Album[] @relation("elo")
+  betterThan   Album[]   @relation("comp")
+  worseThan    Album[]   @relation("comp")
 }
 
 model Track {
@@ -30,7 +32,8 @@ model Track {
   albumId       String // @db.VarChar(36)
   name          String // @db.VarChar(255)
   credits       String // @db.VarChar(1023)
-  duration      Int
   trackNumber   Int
+  duration      Int
+  zScore        Float
   relAlbumScore Int?
 }
