@@ -68,12 +68,14 @@
 
 	<div class="pt-2" class:hidden={inList}>
 		<hr />
-		<table class="table-fixed border-separate border-spacing-y-1 border-spacing-x-2">
+		<table class="table-fixed border-separate border-spacing-y-1 border-spacing-x-2 w-full">
 			<tbody>
 				{#each albumData.tracks as track}
 					<tr>
 						<td align="left" class="text-md font-normal">{track.name}</td>
-						<td align="right" class="text-md font-normal font-mono">{getTimeStr(track.duration)}</td>
+						<td align="right" class="text-md font-normal font-mono">
+							{getTimeStr(track.duration)}
+						</td>
 						{#if track.relAlbumScore}
 							<td align="right" class="text-sm font-normal">{track.relAlbumScore}</td>
 						{/if}

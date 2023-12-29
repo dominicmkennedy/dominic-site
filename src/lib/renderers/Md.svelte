@@ -9,7 +9,7 @@
 </script>
 
 <article
-	class="p-4 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
+	class="p-8 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
 >
 	<SvelteMarkdown {source} renderers={{ link: Link, code: Code, codespan: CodeSpan, list: List }} />
 </article>
