@@ -2,9 +2,25 @@
 	import type { Album, Track } from '@prisma/client';
 	import { goto } from '$app/navigation';
 	import Stars from '$lib/Stars.svelte';
+
 	export let albumData: Album & { tracks: Track[] };
 	export let inList: boolean;
-	const reviewDate = new Date();
+
+	const getTimeStr = (x: number) => {
+		const d = new Date(x);
+		const mins = d.getMinutes();
+		const secs = String(d.getSeconds()).padStart(2, '0');
+
+		return `${mins}:${secs}`;
+	};
+
+	const getDateStr = (d: Date) => {
+		return d.toLocaleDateString('en-us', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		});
+	};
 </script>
 
 <button
@@ -18,20 +34,14 @@
 	<div class="grid grid-cols-5 gap-4">
 		<div class="col-span-3 space-y-2 flex flex-col">
 			<div class="flex-1">
-				<p class="text-xl font-bold">{albumData.name}</p>
-				<p class="text-sm font-normal">{albumData.credits}</p>
-				<p class="text-sm font-light">
-					Released: {albumData.releaseDate.toLocaleDateString('en-us', {
-						year: 'numeric',
-						month: 'short',
-						day: 'numeric'
-					})}
-				</p>
+				<p class="text-xl font-bold pb-1">{albumData.name}</p>
+				<p class="text-md font-medium">{albumData.credits}</p>
+				<p class="text-sm font-normal">Released: {getDateStr(albumData.releaseDate)}</p>
 				<div class="items-center space-x-4">
-					<span class="text-sm font-light">
+					<span class="text-sm font-normal">
 						{albumData.tracks.length} Tracks
 					</span>
-					<span class="text-sm font-light">
+					<span class="text-sm font-normal">
 						{Math.floor(albumData.duration / 60000)} minutes
 					</span>
 				</div>
@@ -41,14 +51,10 @@
 				<div class="space-y-1">
 					<hr />
 					{#if albumData.reviewDate && albumData.dominicScore}
-						<p class="text-sm font-normal">
-							Reviewed: {reviewDate.toLocaleDateString('en-us', {
-								year: 'numeric',
-								month: 'short',
-								day: 'numeric'
-							})}
-						</p>
-						<Stars value={albumData.dominicScore / 2} />
+						<div class="pt-1">
+							<Stars value={albumData.dominicScore / 2} />
+						</div>
+						<p class="text-sm font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
 					{:else}
 						<p class="text-sm font-normal">Coming next week</p>
 					{/if}
@@ -60,18 +66,16 @@
 		</div>
 	</div>
 
-	<div class="table-container pt-2 rounded-xl" class:hidden={inList}>
-		<table class="table table-compact rounded-xl">
+	<div class="pt-2" class:hidden={inList}>
+		<hr />
+		<table class="table-fixed border-separate border-spacing-y-1 border-spacing-x-2">
 			<tbody>
 				{#each albumData.tracks as track}
 					<tr>
-						<td>{track.name}</td>
-						<td>
-							{new Date(track.duration).getMinutes()} min
-							{new Date(track.duration).getSeconds()} sec
-						</td>
+						<td align="left" class="text-md font-normal">{track.name}</td>
+						<td align="right" class="text-md font-normal font-mono">{getTimeStr(track.duration)}</td>
 						{#if track.relAlbumScore}
-							<td>{track.relAlbumScore}</td>
+							<td align="right" class="text-sm font-normal">{track.relAlbumScore}</td>
 						{/if}
 					</tr>
 				{/each}

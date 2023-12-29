@@ -4,7 +4,7 @@
 	export let value: number;
 </script>
 
-<Ratings {value} max={5} justify="justify-left">
+<Ratings {value} max={5} justify="justify-center">
 	<svelte:fragment slot="empty">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
