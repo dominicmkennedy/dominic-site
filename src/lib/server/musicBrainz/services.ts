@@ -41,7 +41,6 @@ export const getAlbumData = async (mbid: string) => {
     trackLenStd,
     releaseDate: new Date(mbidData.date),
     coverArtUrl: `https://coverartarchive.org/release/${mbid}/front-250`,
-    reviewTextMd: null,
     dominicScore: null,
     currentElo: null,
     reviewDate: null,

@@ -17,7 +17,7 @@ model Album {
   trackLenMean Float
   trackLenStd  Float
   coverArtUrl  String
-  reviewTextMd String?
+  reviewTextMd String    @default("# Review forthcoming\nCheck back next Monday!")
   dominicScore Int?
   currentElo   Int?
   reviewDate   DateTime? // @db.Date

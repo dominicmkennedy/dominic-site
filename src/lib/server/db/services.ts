@@ -22,3 +22,12 @@ export const getAlbum = (mbid: string) => {
     include: { tracks: { orderBy: { trackNumber: "asc" } } }
   })
 }
+
+export const addReview = (mbid: string, dominicScore: number, reviewDate: string, reviewTextMd: string, tracks: { mbid: string, relAlbumScore: number }[]) => {
+  const trackUpdates = tracks.map(({ mbid, relAlbumScore }) => ({ where: { mbid }, data: { relAlbumScore } }))
+
+  return prisma.album.update({
+    where: { mbid },
+    data: { reviewDate, dominicScore, reviewTextMd, tracks: { update: trackUpdates } }
+  })
+}

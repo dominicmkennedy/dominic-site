@@ -6,19 +6,17 @@
 	export let data: PageData;
 </script>
 
-<div class="lg:flex">
-	<div class="h-full sticky top-0 p-8 w-1/3 hidden lg:block">
-		{#await data.album then albumData}
+{#await data.album then albumData}
+	<div class="lg:flex">
+		<div class="h-full sticky top-0 p-8 w-1/3 hidden lg:block">
 			<AlbumCard inList={false} {albumData} />
-		{/await}
-	</div>
+		</div>
 
-	<div>
-		<Md source={data.mdText}></Md>
-	</div>
-	<div class="block lg:hidden">
-		{#await data.album then albumData}
+		<div>
+			<Md source={albumData.reviewTextMd}></Md>
+		</div>
+		<div class="block lg:hidden">
 			<AlbumCard inList={false} {albumData} />
-		{/await}
+		</div>
 	</div>
-</div>
+{/await}
