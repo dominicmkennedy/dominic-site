@@ -10,6 +10,10 @@
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
+<svelte:head>
+	<title>Dominic Kennedy</title>
+</svelte:head>
+
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar
@@ -19,7 +23,7 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead"><div /></svelte:fragment>
-			<div class="space-x-6 text-xl text-bold">
+			<div class="space-x-4 text-xl text-bold flex">
 				<a class="hover:text-pink-400 hover:underline" href="/"> Home </a>
 				<a class="hover:text-pink-400 hover:underline" href="/music"> Music </a>
 			</div>
