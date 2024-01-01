@@ -86,9 +86,11 @@
 			<thead>
 				<tr>
 					<td align="left" class="text-md font-bold">Title</td>
-					<td align="center" class="text-md font-bold"></td>
-					<td align="center" class="text-md font-bold">Score</td>
-					<td align="right" class="text-md font-bold"></td>
+					{#if albumData.tracks[0].trackRank !== null && albumData.tracks[0].trackScore !== null}
+						<td />
+						<td align="center" class="text-md font-bold">Score</td>
+					{/if}
+					<td />
 				</tr>
 			</thead>
 			<tbody>
@@ -96,9 +98,9 @@
 					<tr>
 						<td align="left" class="text-sm 2xl:text-lg font-normal">{track.name}</td>
 						{#if track.trackRank !== null && track.trackScore !== null}
-							<td align="center" class="text-sm xl:text-md 2xl:text-lg font-normal"
-								>{getRankStr(track.trackRank)}</td
-							>
+							<td align="center" class="text-sm xl:text-md 2xl:text-lg font-normal">
+								{getRankStr(track.trackRank)}
+							</td>
 							<td>
 								<Stars value={track.trackScore / 2} spacing="space-x-0" height={10} width={12} />
 							</td>
