@@ -76,7 +76,7 @@
 			</div>
 		</div>
 		<div class="col-span-2 justify-self-end">
-			<img src={albumData.coverArtUrl} alt="" class="rounded-lg max-h-52" />
+			<img src={`/album_covers/${albumData.mbid}.jpg`} alt="" class="rounded-lg max-h-52" />
 		</div>
 	</div>
 
