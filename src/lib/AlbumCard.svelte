@@ -76,8 +76,9 @@
 						<td align="right" class="text-md font-normal font-mono">
 							{getTimeStr(track.duration)}
 						</td>
-						{#if track.relAlbumScore}
-							<td align="right" class="text-sm font-normal">{track.relAlbumScore}</td>
+						{#if track.trackRank && track.trackScore}
+							<td align="right" class="text-sm font-normal">{track.trackRank}</td>
+							<td align="right" class="text-sm font-normal">{track.trackScore}</td>
 						{/if}
 					</tr>
 				{/each}

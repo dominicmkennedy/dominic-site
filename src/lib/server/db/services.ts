@@ -23,11 +23,11 @@ export const getAlbum = (mbid: string) => {
   })
 }
 
-export const addReview = (mbid: string, dominicScore: number, reviewDate: string, reviewTextMd: string, tracks: { mbid: string, relAlbumScore: number }[]) => {
-  const trackUpdates = tracks.map(({ mbid, relAlbumScore }) => ({ where: { mbid }, data: { relAlbumScore } }))
+export const addReview = (mbid: string, dominicScore: number, reviewDate: string, reviewTextMd: string) => {
+  // const trackUpdates = tracks.map(({ mbid, relAlbumScore }) => ({ where: { mbid }, data: { relAlbumScore } }))
 
   return prisma.album.update({
     where: { mbid },
-    data: { reviewDate, dominicScore, reviewTextMd, tracks: { update: trackUpdates } }
+    data: { reviewDate, dominicScore, reviewTextMd }
   })
 }

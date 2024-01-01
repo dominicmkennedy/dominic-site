@@ -2,20 +2,12 @@
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup, storeHighlightJs } from '@skeletonlabs/skeleton';
-	import 'highlight.js/styles/github-dark.css';
-	import hljs from 'highlight.js/lib/core';
-	import javascript from 'highlight.js/lib/languages/javascript';
-	import diff from 'highlight.js/lib/languages/javascript';
-	import css from 'highlight.js/lib/languages/javascript';
+	import { storePopup } from '@skeletonlabs/skeleton';
+	import { dev } from '$app/environment';
+	import { inject } from '@vercel/analytics';
 
-	storeHighlightJs.set(hljs);
+	inject({ mode: dev ? 'development' : 'production' });
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
-
-	hljs.registerLanguage('javascript', javascript);
-	hljs.registerLanguage('js', javascript);
-	hljs.registerLanguage('diff', diff);
-	hljs.registerLanguage('css', css);
 </script>
 
 <AppShell>
@@ -30,16 +22,6 @@
 			<div class="space-x-6 text-xl text-bold">
 				<a class="hover:text-pink-400 hover:underline" href="/"> Home </a>
 				<a class="hover:text-pink-400 hover:underline" href="/music"> Music </a>
-        <!-- TODO -->
-				<!-- About -->
-				<!-- Contact -->
-				<!-- Blog -->
-				<!-- Projects -->
-				<!-- Login -->
-				<!-- Calender -->
-				<!-- Photos -->
-				<!-- Links -->
-        <!-- RSS -->
 			</div>
 			<svelte:fragment slot="trail"><div /></svelte:fragment>
 		</AppBar>
