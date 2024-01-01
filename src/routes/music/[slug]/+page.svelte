@@ -15,7 +15,7 @@
 		<div>
 			<Md source={albumData.reviewTextMd}></Md>
 		</div>
-		<div class="block lg:hidden">
+		<div class="block lg:hidden flex justify-center">
 			<AlbumCard inList={false} {albumData} />
 		</div>
 	</div>

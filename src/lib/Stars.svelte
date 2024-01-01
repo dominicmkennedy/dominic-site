@@ -2,14 +2,17 @@
 	import { Ratings } from '@skeletonlabs/skeleton';
 
 	export let value: number;
+	export let spacing = 'space-x-2';
+	export let height = 16;
+	export let width = 18;
 </script>
 
-<Ratings {value} max={5} justify="justify-center">
+<Ratings {value} max={5} {spacing} justify="justify-center">
 	<svelte:fragment slot="empty">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			height="16"
-			width="18"
+			{height}
+			{width}
 			viewBox="0 0 576 512"
 			class="fill-pink-400"
 		>
@@ -21,8 +24,8 @@
 	<svelte:fragment slot="half">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			height="16"
-			width="18"
+			{height}
+			{width}
 			viewBox="0 0 576 512"
 			class="fill-pink-400"
 		>
@@ -34,8 +37,8 @@
 	<svelte:fragment slot="full">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			height="16"
-			width="18"
+			{height}
+			{width}
 			viewBox="0 0 576 512"
 			class="fill-pink-400"
 		>

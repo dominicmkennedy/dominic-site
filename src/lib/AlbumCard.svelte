@@ -21,6 +21,15 @@
 			day: 'numeric'
 		});
 	};
+
+	const getRankStr = (r: number) => {
+		let prefix = 'th';
+		if (r === 1) prefix = 'st';
+		if (r === 2) prefix = 'nd';
+		if (r === 3) prefix = 'rd';
+
+		return `${r}${prefix}`;
+	};
 </script>
 
 <button
@@ -52,7 +61,12 @@
 					<hr />
 					{#if albumData.reviewDate && albumData.dominicScore}
 						<div class="pt-1">
-							<Stars value={albumData.dominicScore / 2} />
+							<Stars
+								value={albumData.dominicScore / 2}
+								spacing="space-x-2"
+								height={20}
+								width={22}
+							/>
 						</div>
 						<p class="text-sm font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
 					{:else}
@@ -68,18 +82,30 @@
 
 	<div class="pt-2" class:hidden={inList}>
 		<hr />
-		<table class="table-fixed border-separate border-spacing-y-1 border-spacing-x-2 w-full">
+		<table class="table-auto border-separate border-spacing-y-1 border-spacing-x-2 w-full">
+			<thead>
+				<tr>
+					<td align="left" class="text-md font-bold">Title</td>
+					<td align="center" class="text-md font-bold"></td>
+					<td align="center" class="text-md font-bold">Score</td>
+					<td align="right" class="text-md font-bold"></td>
+				</tr>
+			</thead>
 			<tbody>
 				{#each albumData.tracks as track}
 					<tr>
-						<td align="left" class="text-md font-normal">{track.name}</td>
-						<td align="right" class="text-md font-normal font-mono">
+						<td align="left" class="text-sm 2xl:text-lg font-normal">{track.name}</td>
+						{#if track.trackRank !== null && track.trackScore !== null}
+							<td align="center" class="text-sm xl:text-md 2xl:text-lg font-normal"
+								>{getRankStr(track.trackRank)}</td
+							>
+							<td>
+								<Stars value={track.trackScore / 2} spacing="space-x-0" height={10} width={12} />
+							</td>
+						{/if}
+						<td align="right" class="text-sm xl:text-md 2xl:text-lg font-normal font-mono">
 							{getTimeStr(track.duration)}
 						</td>
-						{#if track.trackRank && track.trackScore}
-							<td align="right" class="text-sm font-normal">{track.trackRank}</td>
-							<td align="right" class="text-sm font-normal">{track.trackScore}</td>
-						{/if}
 					</tr>
 				{/each}
 			</tbody>
