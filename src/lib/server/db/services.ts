@@ -14,7 +14,10 @@ export const addAlbum = async (mbid: string) => {
 }
 
 export const getAlbums = () => {
-  return prisma.album.findMany({ include: { tracks: { orderBy: { trackNumber: "asc" } } } })
+  return prisma.album.findMany({
+    include: { tracks: { orderBy: { trackNumber: "asc" } } },
+    orderBy: { reviewDate: "desc" }
+  })
 }
 
 export const getAlbum = (mbid: string) => {
