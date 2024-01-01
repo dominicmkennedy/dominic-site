@@ -29,7 +29,8 @@ export const getAlbumData = async (mbid: string) => {
       duration: x.recording.length,
       trackNumber: i,
       zScore: (x.recording.length - trackLenMean) / trackLenStd,
-      relAlbumScore: null
+      trackRank: null,
+      trackScore: null,
     }))
 
   const album: Album = {

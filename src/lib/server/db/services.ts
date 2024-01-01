@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { getAlbumData } from '$lib/server/musicBrainz/services';
+import type { ReviewParams } from '$lib/types';
 
 const prisma = new PrismaClient()
 
@@ -23,11 +24,18 @@ export const getAlbum = (mbid: string) => {
   })
 }
 
-export const addReview = (mbid: string, dominicScore: number, reviewDate: string, reviewTextMd: string) => {
-  // const trackUpdates = tracks.map(({ mbid, relAlbumScore }) => ({ where: { mbid }, data: { relAlbumScore } }))
+export const addReview = (params: ReviewParams, reviewTextMd: string) => {
+  const trackUpdates = Object
+    .entries(params.tracks)
+    .map(([mbid, { trackScore, trackRank }]) => ({ where: { mbid }, data: { trackRank, trackScore } }))
 
   return prisma.album.update({
-    where: { mbid },
-    data: { reviewDate, dominicScore, reviewTextMd }
+    where: { mbid: params.mbid },
+    data: {
+      reviewDate: new Date(params.reviewDate).toISOString(),
+      dominicScore: params.score,
+      reviewTextMd,
+      tracks: { update: trackUpdates }
+    }
   })
 }
