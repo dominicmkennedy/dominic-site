@@ -12,18 +12,14 @@
 </svelte:head>
 
 <div class="lg:flex">
-	<div class="h-full sticky top-0 p-8 w-1/3 hidden lg:block">
+	<div class="h-full sticky top-0 px-3 py-8 w-1/3 hidden lg:block">
 		<AlbumCard inList={false} albumData={data.metadata} />
 	</div>
 
 	<div>
-		<article
-			class="p-8 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
-		>
-			<svelte:component this={data.content} />
-		</article>
+		<svelte:component this={data.content} />
 	</div>
-	<div class="block lg:hidden flex justify-center">
+	<div class="block lg:hidden flex justify-center px-3 pb-6">
 		<AlbumCard inList={false} albumData={data.metadata} />
 	</div>
 </div>

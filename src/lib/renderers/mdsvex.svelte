@@ -8,7 +8,7 @@
 </script>
 
 <article
-	class="p-8 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
+	class="px-3 py-8 mx-auto prose prose-lg dark:prose-invert prose-img:rounded-lg prose-thead:border-gray-200 prose-tr:border-gray-400"
 >
 	<slot />
 </article>

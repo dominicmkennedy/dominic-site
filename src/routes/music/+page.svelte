@@ -1,14 +1,28 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import AlbumCard from '$lib/AlbumCard.svelte';
+	import Rss from 'lucide-svelte/icons/rss';
 
 	export let data: PageData;
 </script>
 
-<div class="pt-4 space-y-4">
-	{#each data.posts as albumData}
-		<div class="max-w-xl mx-auto">
-			<AlbumCard inList={true} {albumData} slug={albumData.slug} />
+<div class="pt-4 space-y-4 px-3 max-w-xl mx-auto">
+	<div class="flex">
+		<div class="prose prose-invert flex-grow">
+			<h1>Weekly Album Reviews</h1>
 		</div>
+		<div class="flex-grow" />
+		<div class="flex-1">
+			<a href="music/rss.xml" target="_blank">
+				<span class="chip variant-filled-tertiary">
+					<Rss />
+				</span>
+			</a>
+		</div>
+	</div>
+	<hr />
+
+	{#each data.posts as albumData}
+		<AlbumCard inList={true} {albumData} slug={albumData.slug} />
 	{/each}
 </div>
