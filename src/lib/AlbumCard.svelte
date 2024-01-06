@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Album, Track } from '@prisma/client';
+	import type { Album } from '$lib/types';
 	import { goto } from '$app/navigation';
 	import Stars from '$lib/Stars.svelte';
 
-	export let albumData: Album & { tracks: Track[] };
+	export let albumData: Album;
 	export let inList: boolean;
 
 	const getTimeStr = (x: number) => {
@@ -12,14 +12,6 @@
 		const secs = String(d.getSeconds()).padStart(2, '0');
 
 		return `${mins}:${secs}`;
-	};
-
-	const getDateStr = (d: Date) => {
-		return d.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
 	};
 
 	const getRankStr = (r: number) => {
@@ -43,9 +35,9 @@
 	<div class="grid grid-cols-5 gap-4">
 		<div class="col-span-3 space-y-2 flex flex-col">
 			<div class="flex-1">
-				<p class="text-xl font-bold pb-1">{albumData.name}</p>
+				<p class="text-xl font-bold pb-1">{albumData.title}</p>
 				<p class="text-md font-medium">{albumData.credits}</p>
-				<p class="text-sm font-normal">Released: {getDateStr(albumData.releaseDate)}</p>
+				<p class="text-sm font-normal">Released: {albumData.albumRelease}</p>
 				<div class="items-center space-x-4">
 					<span class="text-sm font-normal">
 						{albumData.tracks.length} Tracks
@@ -59,16 +51,11 @@
 			<div class="flex-1">
 				<div class="space-y-1">
 					<hr />
-					{#if albumData.reviewDate && albumData.dominicScore}
+					{#if albumData.reviewDate && albumData.score}
 						<div class="pt-1">
-							<Stars
-								value={albumData.dominicScore / 2}
-								spacing="space-x-2"
-								height={20}
-								width={22}
-							/>
+							<Stars value={albumData.score / 2} spacing="space-x-2" height={20} width={22} />
 						</div>
-						<p class="text-sm font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
+						<p class="text-sm font-normal">Reviewed: {albumData.reviewDate}</p>
 					{:else}
 						<p class="text-sm font-normal">Coming next week</p>
 					{/if}

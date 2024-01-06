@@ -6,11 +6,9 @@
 </script>
 
 <div class="pt-4 space-y-4">
-	{#await data.albums then albums}
-		{#each albums as albumData}
-			<div class="max-w-xl mx-auto">
-				<AlbumCard inList={true} {albumData} />
-			</div>
-		{/each}
-	{/await}
+	{#each data.posts as albumData}
+		<div class="max-w-xl mx-auto">
+			<AlbumCard inList={true} {albumData} />
+		</div>
+	{/each}
 </div>
