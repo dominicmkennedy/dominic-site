@@ -4,6 +4,7 @@
 	import Stars from '$lib/Stars.svelte';
 
 	export let albumData: Album;
+  export let slug = ''
 	export let inList: boolean;
 
 	const getTimeStr = (x: number) => {
@@ -12,6 +13,15 @@
 		const secs = String(d.getSeconds()).padStart(2, '0');
 
 		return `${mins}:${secs}`;
+	};
+
+	const getDateStr = (d: string) => {
+		return new Date(d).toLocaleDateString('en-us', {
+      timeZone: 'UTC',
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		});
 	};
 
 	const getRankStr = (r: number) => {
@@ -26,7 +36,7 @@
 
 <button
 	on:click={() => {
-		goto(`/music/${albumData.mbid}`);
+		goto(`/music/${slug}`);
 	}}
 	class="card variant-ghost rounded-lg block p-4"
 	class:card-hover={inList}
@@ -37,7 +47,7 @@
 			<div class="flex-1">
 				<p class="text-xl font-bold pb-1">{albumData.title}</p>
 				<p class="text-md font-medium">{albumData.credits}</p>
-				<p class="text-sm font-normal">Released: {albumData.albumRelease}</p>
+				<p class="text-sm font-normal">Released: {getDateStr(albumData.albumRelease)}</p>
 				<div class="items-center space-x-4">
 					<span class="text-sm font-normal">
 						{albumData.tracks.length} Tracks
@@ -55,7 +65,7 @@
 						<div class="pt-1">
 							<Stars value={albumData.score / 2} spacing="space-x-2" height={20} width={22} />
 						</div>
-						<p class="text-sm font-normal">Reviewed: {albumData.reviewDate}</p>
+						<p class="text-sm font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
 					{:else}
 						<p class="text-sm font-normal">Coming next week</p>
 					{/if}

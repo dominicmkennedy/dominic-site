@@ -69,8 +69,7 @@ tracks:
     name: September Rain (Japanese Version)
 ---
 
-# *First Light*
-# by Makoto Matsushita
+# *{title}* by {credits}
 
 ## Prelude
 

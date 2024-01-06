@@ -2,9 +2,7 @@
 	import a from './a.svelte';
 	import ol from './ol.svelte';
 	import ul from './ul.svelte';
-	// import List from './List.svelte';
 	import code from './code.svelte';
-	// import CodeSpan from './CodeSpan.svelte';
 
 	export { a, ol, ul, code };
 </script>
