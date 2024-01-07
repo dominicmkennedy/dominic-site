@@ -12,6 +12,6 @@ export const load: PageLoad = async ({ params }) => {
 
     return { content: post.default, metadata: post.metadata }
   } catch (e) {
-    throw error(404, `could not find post "${params.slug}"`)
+    throw error(404, `No post "${params.slug}".`)
   }
 }

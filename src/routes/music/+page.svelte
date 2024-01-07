@@ -8,13 +8,18 @@
 
 <div class="pt-4 space-y-4 px-3 max-w-xl mx-auto">
 	<div class="flex">
-		<div class="prose prose-invert flex-grow">
-			<h1>Weekly Album Reviews</h1>
+		<div class="flex-grow">
+			<h1>
+				<span
+					class="h2 bg-gradient-to-br from-secondary-600 to-tertiary-200 bg-clip-text text-transparent box-decoration-clone"
+				>
+					Weekly Album Reviews
+				</span>
+			</h1>
 		</div>
-		<div class="flex-grow" />
-		<div class="flex-1">
+		<div class="flex-none">
 			<a href="music/rss.xml" target="_blank">
-				<span class="chip bg-pink-400 text-slate-950">
+				<span class="chip variant-ghost">
 					<Rss />
 				</span>
 			</a>

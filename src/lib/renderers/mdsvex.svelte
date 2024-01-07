@@ -2,9 +2,11 @@
 	import a from './a.svelte';
 	import ol from './ol.svelte';
 	import ul from './ul.svelte';
+	import h1 from './h1.svelte';
+	import h2 from './h2.svelte';
 	import code from './code.svelte';
 
-	export { a, ol, ul, code };
+	export { a, ol, ul, h1, h2, code };
 </script>
 
 <article
