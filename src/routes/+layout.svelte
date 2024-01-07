@@ -1,10 +1,14 @@
 <script lang="ts">
 	import '../app.postcss';
+	import type { PageData } from './$types';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { dev } from '$app/environment';
 	import { inject } from '@vercel/analytics';
+	import Transition from './transition.svelte';
+
+	export let data: PageData;
 
 	inject({ mode: dev ? 'development' : 'production' });
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -30,5 +34,8 @@
 			<svelte:fragment slot="trail"><div /></svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-	<slot />
+
+	<Transition url={data.url}>
+		<slot />
+	</Transition>
 </AppShell>

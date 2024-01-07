@@ -14,7 +14,7 @@
 		<div class="flex-grow" />
 		<div class="flex-1">
 			<a href="music/rss.xml" target="_blank">
-				<span class="chip variant-filled-tertiary">
+				<span class="chip bg-pink-400 text-slate-950">
 					<Rss />
 				</span>
 			</a>
