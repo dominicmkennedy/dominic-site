@@ -19,9 +19,9 @@ export const GET = async () => {
     })
     .filter(x => x) as (Album & { slug: string })[])
     .sort((a, b) => {
-      const aTime = (a.reviewDate ? new Date(a.reviewDate).getTime() : 0)
-      const bTime = (b.reviewDate ? new Date(b.reviewDate).getTime() : 0)
-      return aTime - bTime
+      const aTime = (a.reviewDate ? new Date(a.reviewDate).getTime() : new Date().getTime())
+      const bTime = (b.reviewDate ? new Date(b.reviewDate).getTime() : new Date().getTime())
+      return bTime - aTime
     })
 
   return json(posts)
