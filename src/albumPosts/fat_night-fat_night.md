@@ -66,7 +66,7 @@ tracks:
   trackNumber: 10
   duration: 224000
   trackRank: 5
-  trackScore: 6
+  trackScore: 5
 ---
 
 # *{title}* by {credits}
