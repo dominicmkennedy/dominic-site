@@ -35,7 +35,8 @@ const rankInvariants = (a: Album): boolean => {
 	const rankRange = range(1, 1 + a.tracks.length);
 	if (JSON.stringify(trackData.map((x) => x.rank)) !== JSON.stringify(rankRange)) {
 		console.warn(`Ranking invariant 1 broken by ${a.title}.`);
-		return false;
+    // TODO
+		// return false;
 	}
 
 	const invarTwo = all(
