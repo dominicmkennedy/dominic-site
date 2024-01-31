@@ -1,34 +1,43 @@
-import type { Album } from '$lib/types'
+import type { Album } from '$lib/types';
 import type { RequestHandler } from './$types';
+import { Feed } from 'feed';
 
 export const GET: RequestHandler = async ({ fetch }) => {
-  const posts: (Album & { slug: string })[] = await (await fetch('/music/posts')).json()
+	const posts: (Album & { slug: string })[] = await (await fetch('/music/posts')).json();
 
-  const xml = `
-		<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-			<channel>
-				<title>Dominic's Album Reviews</title>
-				<description>Weekly album reviews by Dominic Kennedy. Posted weekly on Mondays.</description>
-				<link>https://dominicmkennedy.com/music</link>
-				<atom:link href="https://dominicmkennedy.com/music/rss.xml" rel="self" type="application/rss+xml"/>
-				${posts
-      .filter(post => post.reviewDate)
-      .map(
-        (post) => `
-						<item>
-							<title>${post.title}</title>
-							<description>Dominic's review of ${post.title} by ${post.credits}</description>
-							<link>https://dominicmkennedy.com/music/${post.slug}</link>
-							<guid isPermaLink="true">https://dominicmkennedy.com/music/${post.slug}</guid>
-							<pubDate>${new Date(post.reviewDate!).toUTCString()}</pubDate>
-						</item>
-					`
-      )
-      .join('')}
-			</channel>
-		</rss>
-	`.trim()
+	const lastPostDate = posts
+		.map((post) => (post.reviewDate ? new Date(post.reviewDate) : new Date(0)))
+		.reduce(function (a, b) {
+			return a > b ? a : b;
+		});
 
-  const headers = { 'Content-Type': 'application/xml' }
-  return new Response(xml, { headers })
-}
+	const feed = new Feed({
+		title: 'What I listen to when I listen to music',
+		description: "Dominic's Album reviews. Posted Every Monday.",
+		id: 'https://www.dominicmkennedy.com/music',
+		link: 'https://www.dominicmkennedy.com/music',
+		language: 'en',
+		favicon: 'https://www.dominicmkennedy.com/favicon.ico',
+		copyright: 'All rights reserved 2024, Dominic Kennedy',
+		updated: lastPostDate,
+		author: {
+			name: 'Dominic Kennedy',
+			link: 'https://www.dominicmkennedy.com/'
+		}
+	});
+
+	posts
+		.filter((post) => post.reviewDate)
+		.forEach((post) => {
+			feed.addItem({
+				title: post.title,
+				id: `https://dominicmkennedy.com/music/${post.slug}`,
+				link: `https://dominicmkennedy.com/music/${post.slug}`,
+				description: `Review of ${post.title} by ${post.credits}`,
+				date: new Date(post.reviewDate!)
+			});
+		});
+
+	const headers = { 'Content-Type': 'application/xml' };
+	return new Response(feed.rss2(), { headers });
+};
