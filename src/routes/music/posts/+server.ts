@@ -25,25 +25,25 @@ export const GET = async () => {
 	return json(posts);
 };
 
-const rankInvariants = (a: Album): boolean => {
+const rankInvariants = (album: Album): boolean => {
 	const trackData = (
-		a.tracks
+		album.tracks
 			.map((x) => ({ rank: x.trackRank, score: x.trackScore }))
 			.filter((x) => x.rank && x.score) as { rank: number; score: number }[]
 	).sort((a, b) => a.rank - b.rank);
 
-	const rankRange = range(1, 1 + a.tracks.length);
-	if (JSON.stringify(trackData.map((x) => x.rank)) !== JSON.stringify(rankRange)) {
-		console.warn(`Ranking invariant 1 broken by ${a.title}.`);
-    // TODO
-		// return false;
+	const rankRange = JSON.stringify(range(1, 1 + album.tracks.length));
+	const albumRanks = JSON.stringify(trackData.map((x) => x.rank));
+	if (albumRanks !== '[]' && albumRanks !== rankRange) {
+		console.warn(`Ranking invariant 1 broken by ${album.title}.`);
+		return false;
 	}
 
-	const invarTwo = all(
-		zip(trackData.slice(0, -1), trackData.slice(1)).map(([a, b]) => a.score >= b.score)
+	const staggeredRanks = zip(trackData.slice(0, -1), trackData.slice(1)).map(
+		([a, b]) => a.score >= b.score
 	);
-	if (!invarTwo) {
-		console.warn(`Ranking invariant 2 broken by ${a.title}.`);
+	if (!all(staggeredRanks)) {
+		console.warn(`Ranking invariant 2 broken by ${album.title}.`);
 		return false;
 	}
 	return true;
