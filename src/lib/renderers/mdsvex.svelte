@@ -4,9 +4,10 @@
 	import ul from './ul.svelte';
 	import h1 from './h1.svelte';
 	import h2 from './h2.svelte';
+	import img from './img.svelte';
 	import code from './code.svelte';
 
-	export { a, ol, ul, h1, h2, code };
+	export { a, ol, ul, h1, h2, img, code };
 </script>
 
 <article
