@@ -27,9 +27,10 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead"><div /></svelte:fragment>
-			<div class="space-x-4 text-xl text-bold flex">
+			<div class="space-x-6 text-xl text-bold flex">
 				<a class="hover:text-pink-400 hover:underline" href="/"> Home </a>
 				<a class="hover:text-pink-400 hover:underline" href="/music"> Music </a>
+				<a class="hover:text-pink-400 hover:underline" href="/directory"> Directory </a>
 			</div>
 			<svelte:fragment slot="trail"><div /></svelte:fragment>
 		</AppBar>
