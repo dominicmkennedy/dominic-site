@@ -16,7 +16,7 @@ My name is Dominic Kennedy. I like to listen to music, study (and argue about) p
 
 It's best to reach out at dominicmkennedy[at]gmail.com. Don't be shy!
 
-I'm also on [GitHub](https://github.com/dominicmkennedy) and [letterboxd](https://letterboxd.com/dominickennedy).
+I'm also on [GitHub](https://github.com/dominicmkennedy), [letterboxd](https://letterboxd.com/dominickennedy) and [goodreads](https://goodreads.com/dominic_kennedy).
 
 For those interested, here is my full [CV](kennedy_cv.pdf). *Updated 4/20/2024*.
 
