@@ -1,6 +1,6 @@
-import type { PageLoad } from './$types';
+import type { LayoutLoad } from './$types';
 
-export const load: PageLoad = ({ url }) => {
+export const load: LayoutLoad = ({ url }) => {
   return {
     url: url.pathname
   }
