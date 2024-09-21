@@ -2,13 +2,10 @@
 
 My name is Dominic Kennedy. I like to listen to music, study (and argue about) programming languages, and watch soccer closely.
 
+Presently, I'm a Computer Science Ph.D. student at the University of Utah, where I study Type Theory and Formal Verification under [Ben Greenman](https://users.cs.utah.edu/~blg/).
+
 ![image](dominic_nyc.jpg)
 
-**Previously**: I graduated from the University of Tennessee with a bachelor's in computer science.
-
-**Presently**: I work as a software developer at a large but largely uninteresting consulting firm.
-
-**Pfuturely**: I will begin my Ph.D. in Computer Science at the University of Utah in Salt Lake City.
 
 ---
 
