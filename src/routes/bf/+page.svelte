@@ -50,14 +50,14 @@
 		const startCompTime = performance.now();
 		const compiledProgram = compile(bfProgram);
 		const endCompTime = performance.now();
-		compilationTime = calcTime(endCompTime, startCompTime);
+		compilationTime = calcTime(startCompTime, endCompTime);
 
 		const compiledBf = await WebAssembly.instantiate(compiledProgram, imports);
 
 		const startRunTime = performance.now();
 		compiledBf.instance.exports.main();
 		const endRunTime = performance.now();
-		runTime = calcTime(endRunTime, startRunTime);
+		runTime = calcTime(startRunTime, endRunTime);
 	};
 </script>
 
@@ -89,7 +89,7 @@
 				bind:value={bfProgram}
 				contenteditable
 			/>
-			<div class="space-x-2">
+			<div class="space-x-2 space-y-3">
 				<button disabled={!ready} class="btn btn-md variant-filled-primary" on:click={runProgram}>
 					Run
 				</button>
