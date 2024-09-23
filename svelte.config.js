@@ -4,8 +4,8 @@ import { mdsvex } from 'mdsvex'
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
-	extensions: ['.md'],
-  smartypants: {quotes: true, ellipses: true, dashes: true},
+  extensions: ['.md'],
+  smartypants: { quotes: true, ellipses: true, dashes: true },
   layout: "./src/lib/renderers/mdsvex.svelte"
 }
 
@@ -14,7 +14,12 @@ const config = {
   extensions: ['.svelte', '.md'],
   preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
   vitePlugin: { inspector: true },
-  kit: { adapter: adapter() }
+  kit: { adapter: adapter() },
+  vite: {
+    server: {
+      fs: { strict: false }
+    }
+  }
 };
 
 export default config;
