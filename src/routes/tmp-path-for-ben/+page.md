@@ -33,12 +33,14 @@ Although Froglet seems expressively destitute, particularly when compared to Tem
 Building up these more complicated structures from a simpler initial language requires patience.
 But just how close is the expressive power of these two languages? What follows will be a first-step approach to the expressivity comparison between the simplest mode, Froglet, and the most complex mode, Temporal Forge.
 
+The dedicated reader will notice that I have left out the middle child, Relational Forge.
+Unfortunately, arbitrary set relations cannot be used in the specification of the puzzle I have chosen for this post.
+Therefore, the specification of this puzzle would be the same in Froglet as in Relational Forge.
+
 ## The Puzzle:
 
 Instead of modeling a large-scale software system to keep things simple, I use a fun puzzle: Goats and Wolves.
-Unfortunately, Goats and Wolves doesn't have solutions using arbitrary set relations, meaning that Relational Forge's extra capabilities in that area don't allow for an interesting comparison.
-This is why I only compare Froglet to Temporal Forge in this post.
-Fortunately, The puzzle takes several steps to solve, meaning that Temporal Forge's extra operators will be handy (but aren't strictly necessary).
+The puzzle takes several steps to solve, meaning that Temporal Forge's extra operators will be handy (but aren't strictly necessary).
 This reveals notable differences between the two language modes.
 The puzzle is as follows:
 
@@ -109,11 +111,21 @@ pred initState[s: State] {
     s.boat = Near
     all a: Animal | { s.shore[a] = Near }
 }
+
+pred canTransition[pre: State, post: State] {
+    pre.boat != post.boat
+
+    ...
+}
 ```
 
-The `initState` predicate enforces the rule that the boat and the animals must start on the near shore.
+The `initState` predicate declares that the boat and the animals must start on the near shore.
 In the Froglet example above, `initState` takes one parameter of type `State`.
 It then inspects the state to ensure that all entities are indeed at the near shore.
+
+The `canTransition` predicate enforces that transitions between states must be valid.
+Shown above, is that transitions must follow the rule stating "the boat must move during each step."
+It does this by stating that the location of the boat must be different between the pre and post-states (all of the other rules regarding state transitions are encoded into this predicate but have been omitted for brevity).
 
 Temporal Forge's implicit state passing is ever so slightly more brief:
 
@@ -124,9 +136,18 @@ pred initState {
     Boat.p = Near
     all a: Animal | a.p = Near
 }
+
+pred canTransition {
+    Boat.p != Boat.p'
+
+    ...
+}
 ```
 
-Since each signature (boat and animal) now keeps its own location (the value of which is able to change over implicit time steps), there's no state signature left to pass to the predicates.
+Regarding `initState`, since each signature (boat and animal) now holds its location (the value of which can change over implicit time steps), there's no state signature left to pass to the predicates.
+
+For `canTransition`, Temporal Forge provides the prime operator (`'`).
+The prime operator makes an expression, `Boat.p`, refer to its value in the next state.
 
 ---
 
@@ -153,15 +174,14 @@ Froglet must use the `TransitionStates` predicate to constrain how the solver ha
 In line 4 of the code snippet above, we declare that there must exist some pair of states, called `init` and `final`, which must satisfy the following conditions.
 The `init` state must follow the `initState` predicate.
 `initState` isn't particularly interesting. It just states that the boat and all of the animals must begin on the near shore (as per the problem definition).
-Dido, for the `final` state, the animals and the boat must end up on the far side of the river.
+Ditto, for the `final` state, the animals and the boat must end up on the far side of the river.
 
 Line 8 declares that no state may precede the initial state.
 Line 9 is similar by specifying that no state may follow the final state.
 On line 11, we use a special reachability relation created just for Froglet. Here, it defines that starting at `init` and following on to the next state, we must eventually reach `final`.
 
-The last item in the `TransitionStates` predicate looks intimidating, so I'll break it down.
-The last line states that for every state, 'pre', and for every possible state, 'post' that could follow 'pre', these two states must obey the `canTransition` predicate.
-The `canTransition` predicate encodes parts of the problem relating to state transitions.
+The final line in the `TransitionStates` predicate looks intimidating, so I'll break it down.
+It declares that for every state, 'pre,' and for every possible state, 'post' that could follow 'pre,' these two states must obey the `canTransition` predicate (`canTransition` is the same predicate referred to in the second difference).
 Such as: "In each step, the boat must carry 1 or 2 animals across the river." or "The boat must move during each step." etc.
 In much simpler terms, line 13 says, "Each transition between timesteps must follow the rules laid out in `canTransition`."
 
