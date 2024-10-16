@@ -1,68 +1,70 @@
-# Forge has got my goat
+# Forge Has Got My Goat
 
-How new formal method advancements lower the burden of learning and using software verification tools.
+Solving a children's puzzle with and without temporal logic.
 
-Forge is a hot new lightweight model checker built for pedagogy and ease of use.
+Forge is a hot new model finder heavily based on a previous tool, [Alloy](https://alloytools.org/).
+Forge builds upon Alloy in several ways, one of which is the addition of multiple language modes.
 In this post, I describe Forge and its novel language modes.
 I pose a fun puzzle and solve it using two of Forge's language modes.
-Finally, I contrast the two solutions using the diffrent expressive constructs afforded by each mode.
+Finally, I contrast the two solutions using the different expressive constructs afforded by each mode.
 
-## The tool:
+## The Tool:
 
+For the uninitiated, model finding is a method for finding all counterexamples to a system specification (usually hardware or software) within some bounds.
+In this case, counterexample means any event that would violate a program specification.
+This means that a model finder will guarantee that particular properties will always hold for the system within some bounds.
+Or it will provide every way that those properties are violated (counterexamples) within the specified bounds.
+For example, a specification for a banking protocol may require that a bank transaction must be approved by both parties and terminated within two steps.
+If this specification is fed to Forge and the bounds are set to check all instances up to three steps, Forge will find any bugs in the banking protocol.
+In our case, we will write the constraints of a kid's puzzle; the model finder will automatically find every possible solution to our puzzle for us.
 
-For the uninitiated, model checking is a method for guaranteeing particular properties that will always hold for some system (usually software or hardware).
-The program specification, written by users, ensures the impossibility of undesirable events (e.g., the system may not leak user secrets).
-A model checker takes this specification and feeds it to an [SMT](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) solver.
-The solver then proves that either the undesirable events cannot occur or there is a bug.
-If satisfiable instances exist, the model checker enumerates every possible instance.
-Depending on how a model is constructed, this means that if a bug exists, the checker will find every possible input that allows the buggy behavior.
-In our case, once we write the constraints of the puzzle, the model checker will find every possible solution to our puzzle.
+Forge's automated example finding makes it simpler to use than other formal methods software.
+The Forge model finder is unique in this area because it is built for formal methods pedagogy but remains advanced enough for modeling real-world problems.
+Forge is used in Computer Science courses at Brown University and the University of Utah.
 
-The Forge model checker is unique because it is built for real-world deployment and formal methods pedagogy.
-It is used as part of the curriculum for software verification courses at Brown University and the University of Utah.
-
-Since Forge is a tool built with pedagogy in mind, it must be easy for beginners to learn but have enough expressive power to remain helpful for more advanced real-world use.
+Built with pedagogy in mind, Forge must be accessible for beginners to learn but have enough expressive power to remain helpful for real-world models.
 Forge achieves this by having three user modes: Froglet, Relational Forge, and Temporal Forge.
 
-* **Froglet:** the simplest mode, providing logical quantifiers (e.g., `some` and `all`) and little else
-* **Relational Forge:** allows all valid Froglet and adds relational operators (e.g., transitive and reflexive closure)
+* **Froglet:** the simplest mode, providing logical quantifiers (e.g., `some` and `all`), partial and total functions, and little else
+* **Relational Forge:** allows all valid Froglet and arbitrary relations (e.g., set union, set difference, and transitive reflexive closure)
 * **Temporal Forge:** builds on the two previous modes by allowing [LTL](https://en.wikipedia.org/wiki/Linear_temporal_logic) operators to express models in the temporal domain
 
-Although Froglet seems to be expressively poorer than Temporal Forge, anything that can be expressed in Temporal Forge can also be expressed in Froglet.
-It may just require a bit of patience to build up these more complicated structures from a simpler initial system.
-This is somewhat reminiscent of the notion of Turing Completeness as it relates to traditional programming languages (C can express anything Python can, but it may not be fun to write).
+Although Froglet seems expressively destitute, particularly when compared to Temporal Forge, much of what can be expressed in Temporal Forge can also be expressed in Froglet.
+Building up these more complicated structures from a simpler initial language requires patience.
+But just how close is the expressive power of these two languages? What follows will be a first-step approach to the expressivity comparison between the simplest mode, Froglet, and the most complex mode, Temporal Forge.
 
-What follows will be an in-depth comparison between the simplest mode, Froglet, and the most complex mode, Temporal Forge.
+## The Puzzle:
 
-## The puzzle:
-
-Instead of modeling a large-scale software system, I want to keep things simple, so I'll use a fun kids' puzzle: Goats and Wolves.
-The puzzle takes several steps to solve, meaning that Temporal Forge's extra operators will be handy (but aren't strictly necessary).
-This should tease out some notable differences between the two language modes.
+Instead of modeling a large-scale software system to keep things simple, I use a fun puzzle: Goats and Wolves.
+Unfortunately, Goats and Wolves doesn't have solutions using arbitrary set relations, meaning that Relational Forge's extra capabilities in that area don't allow for an interesting comparison.
+This is why I only compare Froglet to Temporal Forge in this post.
+Fortunately, The puzzle takes several steps to solve, meaning that Temporal Forge's extra operators will be handy (but aren't strictly necessary).
+This reveals notable differences between the two language modes.
 The puzzle is as follows:
 
 Three goats and three wolves want to cross a river. They have one boat, which can hold up to two animals.
-* Initially, all 6 animals and the boat are on the near side of the river.
-* At the end, all 6 animals and the boat must be on the far side of the river.
+* Initially, all six animals and the boat are on the near side of the river.
+* At the end, all six animals and the boat must be on the far side of the river.
     * In each step, the boat must carry 1 or 2 animals across the river.
     * The boat must move during each step.
     * The boat cannot move with zero animals inside.
-* The wolves will eat the goats only if the wolves outnumber the goats.
-    * All 6 animals must survive.
+* The wolves will eat the goats only if the wolves outnumber the goats on either side.
+    * All six animals must survive.
 
-Here is a vizuilation (created in Forge) of one possible solution to this problem.
+Here is a visualization (created in Forge) of one possible solution to this problem.
 
 ![Solution to Goat-Wolf Problem](goat-wolf-solution.png)
 
-## A quick diff
+## A Quick Diff
 
 I wrote idiomatic models for the Goat-Wolf problem in Froglet and Temporal Forge.
-I diff'ed the two files on my computer, and two clear differences popped out:
+I diff'ed the two files on my computer, and three apparent differences popped out:
 
 1. In Froglet, the user must manage state explicitly, but Temporal Forge manages state implicitly
-2. Froglet must 'explain' how time works to the solver
+2. Froglet requires the user to pass state signatures to each predicate, while Temporal Forge is able to elide this requirement
+3. The user must 'explain' how time works to Froglet
 
-In regards to the first point, here are the relevant code snippets from each language and their signifigance:
+In regards to the first point, here are the relevant code snippets from each language and their significance:
 
 ```
 #lang forge/froglet
@@ -77,10 +79,10 @@ sig State {
 ```
 
 To handle state in Froglet, we declare a signature called `State`.
-The `shore` field tracks the position of our animals by creating a mapping from `Animal` to `Position`.
-The last field, `boat`, stores the position of the boat.
+The `shore` field tracks our animals' position by mapping from `Animal` to `Position`.
+The last field, `boat`, stores the boat's position.
 The first field, `next`, may point to our next state (the `lone` keyword means at most one).
-This creates a 'linked list' of `State` signature's that track the positions of our entities over time.
+This is meant to create a 'linked list' of `State` signatures that track the positions of our entities over time (this alone won't make a correct 'linked list' of time states; we must also declare linearity, which we rectify in the next section).
 
 This is in stark contrast to the implicit expression of states in Temporal Forge:
 
@@ -88,15 +90,47 @@ This is in stark contrast to the implicit expression of states in Temporal Forge
 #lang forge/temporal
 
 abstract sig Animal { var p: one Position }
+sig Boat { var p: one Position }
 ```
 
 Temporal Forge tracks state implicitly, hiding its internal representation from the user.
 Because of this, Temporal Forge also allows its signatures to mark their fields as `var`.
-Compared to Froglet's always static fields a `var` field denotes that the field's value may change across states.
+Compared to Froglet's always static fields, a `var` field denotes that the field's value may change across states.
 
 ---
 
-The second difference I observed about 'explaining' time to the model checker:
+Regarding the second difference, the requirement to pass state signatures to each predicate in Froglet is a consequence of the abovementioned point.
+Froglet's explicit state management requires the explicit passing of states to predicates.
+
+```
+#lang forge/froglet
+
+pred initState[s: State] {
+    s.boat = Near
+    all a: Animal | { s.shore[a] = Near }
+}
+```
+
+The `initState` predicate enforces the rule that the boat and the animals must start on the near shore.
+In the Froglet example above, `initState` takes one parameter of type `State`.
+It then inspects the state to ensure that all entities are indeed at the near shore.
+
+Temporal Forge's implicit state passing is ever so slightly more brief:
+
+```
+#lang forge/temporal
+
+pred initState {
+    Boat.p = Near
+    all a: Animal | a.p = Near
+}
+```
+
+Since each signature (boat and animal) now keeps its own location (the value of which is able to change over implicit time steps), there's no state signature left to pass to the predicates.
+
+---
+
+The third difference I observed about having to 'explain' time to Froglet:
 
 ```
 #lang forge/froglet
@@ -115,7 +149,7 @@ pred TransitionStates {
 }
 ```
 
-Froglet must use the `TransitionStates` predicate to constrain how the solver handles the time signature (Time must be linear; time must have a definite beginning and a definite end).
+Froglet must use the `TransitionStates` predicate to constrain how the solver handles the time signature (Time must be linear and have a definite beginning and end).
 In line 4 of the code snippet above, we declare that there must exist some pair of states, called `init` and `final`, which must satisfy the following conditions.
 The `init` state must follow the `initState` predicate.
 `initState` isn't particularly interesting. It just states that the boat and all of the animals must begin on the near shore (as per the problem definition).
@@ -125,7 +159,7 @@ Line 8 declares that no state may precede the initial state.
 Line 9 is similar by specifying that no state may follow the final state.
 On line 11, we use a special reachability relation created just for Froglet. Here, it defines that starting at `init` and following on to the next state, we must eventually reach `final`.
 
-The very last item in the `TransitionStates` predicate looks intimidating, so I'll break it down.
+The last item in the `TransitionStates` predicate looks intimidating, so I'll break it down.
 The last line states that for every state, 'pre', and for every possible state, 'post' that could follow 'pre', these two states must obey the `canTransition` predicate.
 The `canTransition` predicate encodes parts of the problem relating to state transitions.
 Such as: "In each step, the boat must carry 1 or 2 animals across the river." or "The boat must move during each step." etc.
@@ -146,19 +180,21 @@ Compare this to Temporal Forge's timestep management:
 Temporal Forge has particular constructs for handling these events directly.
 These constructs make it intuitive to see that the first state must follow the rules of `initState`.
 During state transition, the rules of `canTransition` must always be applied.
-Eventually, the model must end in accordance with the `finalState` predicate.
+Eventually, the model must end according to the `finalState` predicate.
 
 ## Conclusion
 
 If Temporal Forge has all this expressive power, why bother with the less expressive modes?
-I see two compelling reasons for a simpler language.
+I see three compelling reasons for a simpler language.
 
-1. Many modeling problems don't require a time domain to be expressed
-2. Simpler systems are a better way to teach students who have no prior experience with formal methods
+1. Some modeling problems don't require a time domain to be expressed, such as solving Sudoku
+2. Temporal Forge is a much more complex language than Froglet; starting with a simpler system is a better way to teach formal methods to students
+3. Although it didn't come up in this comparison, Froglet is much nicer when the specification requires simultaneously referring to two or more states.
+It's easy to keep a reference to any of Froglet's time states, while the nature of Temporal Forge's always-changing state can make it tricky to keep a handle on multiple states simultaneously.
 
-## More resources
+## More Resources
 
-For those that find themselves intrested in learning more about Forge.
+For those who find themselves interested in learning more about Forge,
 
 * [code for these models](TODO add link)
 * [Forge website](https://forge-fm.org/)
