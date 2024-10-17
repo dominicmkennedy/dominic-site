@@ -30,6 +30,7 @@
 			<div class="space-x-6 text-xl text-bold flex">
 				<a class="hover:text-pink-400 hover:underline" href="/"> Home </a>
 				<a class="hover:text-pink-400 hover:underline" href="/music"> Music </a>
+				<a class="hover:text-pink-400 hover:underline" href="/blog"> Blog </a>
 				<a class="hover:text-pink-400 hover:underline" href="/directory"> Directory </a>
 			</div>
 			<svelte:fragment slot="trail"><div /></svelte:fragment>

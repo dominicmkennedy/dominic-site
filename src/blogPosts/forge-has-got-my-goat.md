@@ -1,3 +1,9 @@
+---
+title: Forge Has Got My Goat
+postDate: 2024-10-17
+technical: true
+---
+
 # Forge Has Got My Goat
 
 Solving a children's puzzle with and without temporal logic.
@@ -216,6 +222,6 @@ It's easy to keep a reference to any of Froglet's time states, while the nature 
 
 For those who find themselves interested in learning more about Forge,
 
-* [code for these models](TODO add link)
+* [code for these models](https://github.com/utahplt/goat-wolf-puzzle)
 * [Forge website](https://forge-fm.org/)
 * [Forge paper](https://cs.brown.edu/~tbn/publications/forge-oopsla24.pdf)
