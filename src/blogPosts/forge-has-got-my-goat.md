@@ -61,7 +61,7 @@ Three goats and three wolves want to cross a river. They have one boat, which ca
 
 Here is a visualization (created in Forge) of one possible solution to this problem.
 
-![Solution to Goat-Wolf Problem](goat-wolf-solution.png)
+![Solution to Goat-Wolf Problem](/goat-wolf-solution.png)
 
 ## A Quick Diff
 
