@@ -5,12 +5,12 @@ export type Album = {
   duration: int
 	albumRelease: string
   score: number | null
-  reviewDate: string | null
+  reviewDate: string
   tracks: {
     mbid: string
     trackNumber: number
-    trackRank: number | null
-    trackScore: number | null
+    trackRank: number | undefined
+    trackScore: number | undefined
     duration: number
     name: string
   }[]

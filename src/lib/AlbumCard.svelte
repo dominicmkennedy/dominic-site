@@ -4,7 +4,7 @@
 	import Stars from '$lib/Stars.svelte';
 
 	export let albumData: Album;
-  export let slug = ''
+	export let slug = '';
 	export let inList: boolean;
 
 	const getTimeStr = (x: number) => {
@@ -17,7 +17,7 @@
 
 	const getDateStr = (d: string) => {
 		return new Date(d).toLocaleDateString('en-us', {
-      timeZone: 'UTC',
+			timeZone: 'UTC',
 			year: 'numeric',
 			month: 'short',
 			day: 'numeric'
@@ -65,10 +65,10 @@
 						<div class="pt-1">
 							<Stars value={albumData.score / 2} spacing="space-x-2" height={20} width={22} />
 						</div>
-						<p class="text-sm font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
-					{:else}
-						<p class="text-sm font-normal">Coming next week</p>
 					{/if}
+					<div class="pt-1">
+						<p class="text-md font-normal">Reviewed: {getDateStr(albumData.reviewDate)}</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -83,9 +83,11 @@
 			<thead>
 				<tr>
 					<td align="left" class="text-md font-bold">Title</td>
-					{#if albumData.tracks[0].trackRank !== null && albumData.tracks[0].trackScore !== null}
+					{#if albumData.tracks[0].trackRank !== undefined && albumData.tracks[0].trackScore !== undefined}
 						<td />
 						<td align="center" class="text-md font-bold">Score</td>
+					{:else}
+						<td align="center" class="text-md font-bold">Length</td>
 					{/if}
 					<td />
 				</tr>
@@ -94,7 +96,7 @@
 				{#each albumData.tracks as track}
 					<tr>
 						<td align="left" class="text-sm 2xl:text-lg font-normal">{track.name}</td>
-						{#if track.trackRank !== null && track.trackScore !== null}
+						{#if track.trackRank !== undefined && track.trackScore !== undefined}
 							<td align="center" class="text-sm xl:text-md 2xl:text-lg font-normal">
 								{getRankStr(track.trackRank)}
 							</td>
@@ -102,7 +104,7 @@
 								<Stars value={track.trackScore / 2} spacing="space-x-0" height={10} width={12} />
 							</td>
 						{/if}
-						<td align="right" class="text-sm xl:text-md 2xl:text-lg font-normal font-mono">
+						<td class="text-sm xl:text-md 2xl:text-lg font-normal font-mono">
 							{getTimeStr(track.duration)}
 						</td>
 					</tr>

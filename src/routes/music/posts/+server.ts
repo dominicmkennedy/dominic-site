@@ -15,7 +15,7 @@ export const GET = async () => {
 			})
 			.filter((x) => x) as (Album & { slug: string })[]
 	)
-		.filter((x) => rankInvariants(x))
+		// .filter((x) => rankInvariants(x))
 		.sort((a, b) => {
 			const aTime = a.reviewDate ? new Date(a.reviewDate).getTime() : new Date().getTime();
 			const bTime = b.reviewDate ? new Date(b.reviewDate).getTime() : new Date().getTime();
